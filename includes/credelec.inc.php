@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
                 $_SESSION['saldo'] -= 10;
                 $recarga = gerarCodigoCredelec(14);
-                $_SESSION['recarga'] = $recarga;
+                setcookie("recarga", $recarga, 0, '/');
                 header('Location: ../credelec.php?Recarga comprada com sucesso');
                 exit(200);
             } else {

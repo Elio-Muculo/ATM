@@ -75,12 +75,12 @@
         </div>
         
 
-        <?php if (isset($_SESSION['recarga'])) { ?>
+        <?php if (isset($_COOKIE['recarga'])) { ?>
             <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                 <div>
                     &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga é.
-                    <?php echo isset($_SESSION["recarga"]) ? $_SESSION["recarga"] : ''; ?>
+                    <?php echo isset($_COOKIE["recarga"]) ? $_COOKIE["recarga"] : ''; ?>
                 </div>
         </div>
        <?php  } ?>

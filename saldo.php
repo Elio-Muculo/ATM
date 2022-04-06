@@ -97,7 +97,6 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
 
