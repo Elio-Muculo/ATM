@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Recargas</title>
+    <title>Recarga</title>
 </head>
 <body>
 
@@ -72,17 +72,7 @@
             </div>
         </div>
         
-        <div class="row justify-content-center mt-5 pt-4">
-            <form action="includes/levantamento.inc.php" method="POST" class="">
-                <div class="form-group mb-3">
-                   <label class="label" for="password">Digite o valor deseja levantar.</label>
-                <input type="number" class="form-control" name="valor"  required>
-                </div>
-                <div class="form-group">
-                    <button type="submit"  class="form-control btn btn-primary rounded submit px-3">Levantar</button>
-                </div>
-            </form>
-        </div>
+        <!--  implementar interface para recargas -->
         
     </div>
 </div>
