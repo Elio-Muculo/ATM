@@ -66,7 +66,18 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
               <li class="breadcrumb-item active" aria-current="page" style="color: #4c2d45;">consulta saldo</li>
             </ol>
         </nav>
-        
+        <?php if (isset($_SESSION['sucess'])) { ?>
+            <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                <div>
+                    &nbsp;&nbsp;&nbsp;
+                    <?php echo isset($_SESSION["sucess"]) ? $_SESSION["sucess"] : ''; ?>
+                    <?php unset($_SESSION['sucess']); ?>
+                </div>
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+            </div>
+       <?php  } ?>
         <div class="row">
             <div class="col-md-4">
                 <div class="card text-dark bg-light mb-3" style="max-width: 18rem; visibility: hidden;">
@@ -100,6 +111,10 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
     </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
 </html>

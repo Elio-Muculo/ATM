@@ -27,11 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "numero invalido";
             }
         } else {
-            header('Location: ../saldo.php?saldo insuficiente para recarga');
+            $error =  "saldo da conta é insuficiente para a compra.";
+            $_SESSION['error'] = $error;
+            header('Location: ../credelec.php');
             exit;
         }
     }  else {
-        echo "sem saldo";
+       echo "sem saldo";
     }  
 }
 

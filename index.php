@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="pt">
   <head>
@@ -28,6 +29,20 @@
 							</div>
 						</div>
 						<form action="includes/login.inc.php" method="POST" class="signin-form">
+							<?php if (isset($_SESSION['error'])) { ?>
+								
+									<div> 
+										<?php 
+										if (isset($_SESSION["error"])) :
+											foreach($_SESSION['error'] as $erro) : ?>
+												<div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+													<?php echo $erro; ?>
+												</div>
+										<?php	endforeach; 
+											unset($_SESSION['error']);
+										endif;
+										?>
+							<?php  } ?>
 							<div class="form-group mb-3">
 								<label class="label" for="name">Número da conta</label>
 								<input type="number" class="form-control" name="user" placeholder="introduzir número da conta" required>

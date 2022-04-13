@@ -81,18 +81,26 @@
                 <div>
                     &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga é: 
                     <?php echo isset($_COOKIE["recarga"]) ? $_COOKIE["recarga"] : ''; ?>
-                </div>
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+                    <?php  setcookie('recarga', null, -1, '/'); ?>
+                </div> 
             </div>
        <?php  } ?>
         
+   
         <div class="row justify-content-center mt-3 ">
             <form action="includes/credelec.inc.php" method="POST" class="signin-form">
                 <div class="form-group mb-3"  style="width: 450px;">
                    <label class="label" for="contador">Digite o codigo contador.</label>
                 <input type="number" class="form-control" name="contador">
                 </div>
+                <?php if (isset($_SESSION['error'])) { ?>
+                    <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+                        <div> 
+                            <?php echo isset($_SESSION["error"]) ? $_SESSION["error"] : ''; ?>
+                            <?php  unset($_SESSION['error']); ?>
+                        </div> 
+                    </div>
+                <?php  } ?>
                 <div class="form-group mb-3">
                    <label class="label" for="valor">Digite o valor do credelec.</label>
                 <input type="number" class="form-control" name="valor">
