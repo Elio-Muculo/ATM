@@ -2,6 +2,10 @@
 
 /* @tipo  */
 function validarCampos($tipo, $campo) {
+    trim($campo); // remover espacos
+	htmlentities($campo); // escapar caracteres especiais
+	stripslashes($campo); // remove \ do input
+
     switch ($tipo) {
         case 'email':
             if (!empty($campo) && filter_var($campo, FILTER_VALIDATE_EMAIL)) {
@@ -10,15 +14,18 @@ function validarCampos($tipo, $campo) {
                 throw new Exception("");
             }
             break;
+        case 'string':
+            $data = isset($data) ? filter_var($data, FILTER_SANITIZE_STRING) : false;
+            break;
         case 'int':
-            if (!empty($campo) && filter_var($campo, FILTER_VALIDATE_INT)) {
+            if (!filter_var($campo, FILTER_VALIDATE_INT) === false) {
                 return true;
             } else {
-                throw new Exception("Error Processing Request");
+                throw new Exception("campo invalido");
             }
             break;
         default:
-            # code...
+            "tipo de dados incompativel";
             break;
     }
 }

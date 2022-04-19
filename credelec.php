@@ -52,18 +52,18 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
    
         <div class="row justify-content-center mt-3 ">
             <form action="includes/credelec.inc.php" method="POST" class="signin-form">
-                <div class="form-group mb-3"  style="width: 450px;">
-                   <label class="label" for="contador">Digite o codigo contador.</label>
-                <input type="number" class="form-control" name="contador">
-                </div>
                 <?php if (isset($_SESSION['error'])) { ?>
                     <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
                         <div> 
                             <?php echo isset($_SESSION["error"]) ? $_SESSION["error"] : ''; ?>
-                            <?php  unset($_SESSION['error']); ?>
+                            <?php unset($_SESSION['error']); ?>
                         </div> 
                     </div>
                 <?php  } ?>
+                <div class="form-group mb-3"  style="width: 450px;">
+                   <label class="label" for="contador">Digite o codigo contador.</label>
+                <input type="text" class="form-control" name="contador">
+                </div>
                 <div class="form-group mb-3">
                    <label class="label" for="valor">Digite o valor do credelec.</label>
                 <input type="number" class="form-control" name="valor">

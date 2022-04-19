@@ -5,7 +5,7 @@ session_start();
 $campos = array('int' => $_POST['contador'], 'int' => $_POST['valor']);
 
 foreach ($campos as $key => $value) {
-    if (validarCampos($key, intval($value))) {
+    if (validarCampos($key, $value)) {
         $valor = $_POST['valor'];
         $contador = $_POST['contador'];
     }
@@ -16,15 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_SESSION['saldo'])) {
         // valor levantar + 10 devido a taxa de recarga.
         if (!($valor + 10 > $_SESSION['saldo'])) {
-            if (validarNumeroContador(intval($contador))) {
+            if (validarNumeroContador($contador)) {
                 $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
                 $_SESSION['saldo'] -= 10;
                 $recarga = gerarCodigoCredelec(14);
                 setcookie("recarga", $recarga, 0, '/');
-                header('Location: ../credelec.php?Recarga comprada com sucesso');
+                header('Location: ../credelec.php');
                 exit(200);
             } else {
-                echo "numero invalido";
+                $error =  "Caro CLiente, forneça um numero de contador válido.";
+                $_SESSION['error'] = $error;
+                header('Location: ../credelec.php');
+                exit(200);
             }
         } else {
             $error =  "saldo da conta é insuficiente para a compra.";
@@ -38,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-// verificar se o numero fornecido é valido.
+// verificar se o numero fornecido é valido deve ser 12 digitos.
 function validarNumeroContador($numero) {
     if (validarCampos('int', $numero)) {
-        // if (strlen($numero) == 5) {
+        if (strlen(strval($numero)) == 12) {
             return true;
-        // }
+        }
     }
 }
 
@@ -54,6 +57,7 @@ function gerarCodigoCredelec($lenght) {
     $charLenght = strlen($char);
     $codigo = '';
     for ($i = 0; $i < $lenght; $i++) {
+        // dar espaço no numero recarga a cada 4 digitos
         if (strlen($codigo) == 3 || strlen($codigo) == 8 || strlen($codigo) == 13) {
             $codigo .= $char[random_int(0, $charLenght - 1)] . "\n";
         } 
