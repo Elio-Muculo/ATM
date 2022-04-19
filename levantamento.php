@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 
 ?>
@@ -36,6 +37,13 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
         
         <div class="row justify-content-center mt-5 pt-4">
             <form action="includes/levantamento.inc.php" method="POST" class="">
+                    <?php if (isset($_SESSION['msg'])) : ?>
+                        <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
+                            <?php echo $_SESSION['msg']; 
+                            unset($_SESSION['msg']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
                 <div class="form-group mb-3">
                    <label class="label" for="password">Digite o valor deseja levantar.</label>
                 <input type="number" class="form-control" name="valor"  required>

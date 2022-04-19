@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!filter_var($_POST['valor'], 'FILTER_VALIDATE_INT') === false) {
+if (!filter_var(intval($_POST['valor']), FILTER_VALIDATE_INT) === false) {
     $levantar = $_POST['valor'];
 }
 
@@ -12,10 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!($levantar + 10 > $_SESSION['saldo'])) {
             $_SESSION['saldo'] = $_SESSION['saldo'] - $levantar;
             $_SESSION['saldo'] -= 10;
-            header('Location: ../saldo.php?levatamento feito com sucesso');
+            $_SESSION['msg'] = "Caro cliente, o seu levantamento foi efectuado com sucesso.";
+            header('Location: ../levantamento.php');
             exit;
         } else {
-            header('Location: ../saldo.php?saldo insuficiente para levantar');
+            $_SESSION['msg'] = "Caro cliente, o seu levantamento não foi efectuado, saldo negativo.";
+            header('Location: ../levantamento.php');
             exit;
         }
     }  else {
