@@ -1,46 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Recarga</title>
-</head>
-<body>
+<?php 
+include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 
-    
-<div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-        <div class="p-4 pt-3">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
-	        <ul class="list-unstyled components mb-5">
-                <li>
-                    <a href="saldo.php">Saldo</a>
-                </li>
-                <li>
-                    <a href="levantamento.php">Levantamento</a>
-                </li>
-	            <li>
-                    <a href="movimento.php">Movimentos</a>
-	            </li>
-	            <li>
-                    <a href="recarga.php">Recargas</a>
-                </li>
-	            <li>
-                    <a href="credelec.php">Credelec</a>
-	            </li>
-	        </ul>
-
-	        <div class="footer">
-                <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos direitos reservados <i class="icon-heart" aria-hidden="true"></i>
-            </div>
-	      </div>
-    	</nav>
-
-        <!-- Page Content  -->
+?>
+<!-- Page Content  -->
     <div id="content" class="p-4 p-md-5" style="width: 100%;">
         <nav class="navbar navbar-expand-lg navbar-white bg-light rounded shadow-sm mb-4">
             <div class="container-fluid">

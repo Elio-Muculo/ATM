@@ -5704,6 +5704,7 @@ button.bg-dark:focus {
   #sidebar {
     min-width: 300px;
     max-width: 300px;
+    height: 100vh;
     background: #4c2d45;
     color: #fff;
     -webkit-transition: all 0.3s;
@@ -5714,7 +5715,7 @@ button.bg-dark:focus {
     #sidebar .logo {
       display: block;
       width: 120px;
-      height: 80px;
+      padding: 20px 0;
       margin: 0 auto; }
       #sidebar .logo span {
         display: block; }
@@ -5727,7 +5728,7 @@ button.bg-dark:focus {
         #sidebar ul li > ul li {
           font-size: 14px; }
       #sidebar ul li a {
-        padding: 12px 0;
+        padding: 15px 0;
         display: block;
         color: rgba(255, 255, 255, 0.8);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1); }

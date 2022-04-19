@@ -1,54 +1,14 @@
 <?php 
 session_start();
 
+include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
+
 if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
     $_SESSION['saldo'] = 1000;
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="pt-pt">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Saldo</title>
-</head>
-<body>
-
-    
-    <div class="wrapper d-flex align-items-stretch" style="width: 100%">
-    <nav id="sidebar">
-        <div class="p-4 pt-3">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
-	        <ul class="list-unstyled components mb-5">
-                <li>
-                    <a href="saldo.php">Saldo</a>
-                </li>
-                <li>
-                    <a href="levantamento.php">Levantamento</a>
-                </li>
-	            <li>
-                    <a href="movimento.php">Movimentos</a>
-	            </li>
-	            <li>
-                    <a href="recarga.php">Recargas</a>
-                </li>
-	            <li>
-                    <a href="credelec.php">Credelec</a>
-	            </li>
-	        </ul>
-
-	        <div class="footer">
-                <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos direitos reservados <i class="icon-heart" aria-hidden="true"></i>
-            </div>
-	</div>
-    </nav>
-
-        <!-- Page Content  -->
+<!-- Page Content  -->
     <div id="content" class="p-4 p-md-5" style="width: 100%">
         <nav class="navbar navbar-expand-lg navbar-white bg-light rounded shadow-sm mb-4">
             <div class="container-fluid">
@@ -62,8 +22,8 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
 
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page" style="color: #4c2d45;">consulta saldo</li>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="color: #4c2d45;">consulta saldo</li>
             </ol>
         </nav>
         <?php if (isset($_SESSION['sucess'])) { ?>
@@ -71,11 +31,9 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                 <div>
                     &nbsp;&nbsp;&nbsp;
-                    <?php echo isset($_SESSION["sucess"]) ? $_SESSION["sucess"] : ''; ?>
+                    <?php echo $_SESSION["sucess"] ?? ''; ?>
                     <?php unset($_SESSION['sucess']); ?>
                 </div>
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
             </div>
        <?php  } ?>
         <div class="row">

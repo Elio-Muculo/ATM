@@ -24,25 +24,21 @@
 					<div class="login-wrap p-4 p-md-5">
 						<div class="d-flex">
 							<div class="w-100">
-								<h3 class="mb-4">BEM-VINDO, CARO CLIENTE!
-                                                               </h3>
+								<h3 class="mb-4">BEM-VINDO, CARO CLIENTE!</h3>
 							</div>
 						</div>
 						<form action="includes/login.inc.php" method="POST" class="signin-form">
-							<?php if (isset($_SESSION['error'])) { ?>
-								
-									<div> 
+							<?php if (isset($_SESSION['error'])) : ?>
 										<?php 
 										if (isset($_SESSION["error"])) :
 											foreach($_SESSION['error'] as $erro) : ?>
 												<div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
 													<?php echo $erro; ?>
 												</div>
-										<?php	endforeach; 
+										<?php endforeach; 
 											unset($_SESSION['error']);
 										endif;
-										?>
-							<?php  } ?>
+								 endif; ?>
 							<div class="form-group mb-3">
 								<label class="label" for="name">Número da conta</label>
 								<input type="number" class="form-control" name="user" placeholder="introduzir número da conta" required>
