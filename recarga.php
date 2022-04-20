@@ -34,8 +34,55 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
             </div>
         </div>
         
-        <!--  implementar interface para recargas -->
-        
+        <section class="rc-section ">
+		    <div class="container ">
+                <div class="row justify-content-center">
+                    <div class="recarga-wrap p-2 p-md-2">
+                            <form action="includes/recarga.inc.php" method="POST" class="signin-form">
+                                <?php if (isset($_SESSION['error'])) : ?>
+                                            <?php 
+                                            if (isset($_SESSION["error"])) :
+                                                foreach($_SESSION['error'] as $erro) : ?>
+                                                    <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+                                                        <?php echo $erro; ?>
+                                                    </div>
+                                            <?php endforeach; 
+                                                unset($_SESSION['error']);
+                                            endif;
+                                    endif; ?>
+                                <div class="form-group mb-3">
+                                    <label class="label" for="name">Operadora</label>
+                                    <select name="operadora" class="form-control">
+                                        <option value="">selecione</option>
+                                        <option value="vodacom">Vodacom</option>
+                                        <option value="tmcel">Tmcel</option>
+                                        <option value="movitel">Movitel</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="label" for="valor">Valor</label>
+                                    <select name="valor" class="form-control">
+                                        <option value="">selecione</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="label" for="cel">Numero de telefone</label>
+                                <input type="tel" class="form-control" name="cel" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit"  class="form-control btn btn-primary rounded submit px-3">Comprar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+	    </section>        
     </div>
 </div>
 
