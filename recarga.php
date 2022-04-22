@@ -1,5 +1,6 @@
 <?php 
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
+session_start();
 
 ?>
 <!-- Page Content  -->
@@ -37,19 +38,30 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
         <section class="rc-section ">
 		    <div class="container ">
                 <div class="row justify-content-center">
+                <?php if (isset($_COOKIE['recarga'])) { ?>
+                        <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                            <div>
+                                &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga é: 
+                                <?php echo isset($_COOKIE["recarga"]) ? $_COOKIE["recarga"] : ''; ?>
+                                <?php  setcookie('recarga', null, -1, '/'); ?>
+                            </div> 
+                        </div>
+                <?php  } ?>
                     <div class="recarga-wrap p-2 p-md-2">
                             <form action="includes/recarga.inc.php" method="POST" class="signin-form">
-                                <?php if (isset($_SESSION['error'])) : ?>
-                                            <?php 
-                                            if (isset($_SESSION["error"])) :
-                                                foreach($_SESSION['error'] as $erro) : ?>
-                                                    <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
-                                                        <?php echo $erro; ?>
-                                                    </div>
-                                            <?php endforeach; 
-                                                unset($_SESSION['error']);
-                                            endif;
+                                    <?php 
+                                    if (isset($_SESSION["error"])) :
+                                        foreach($_SESSION['error'] as $erro) : ?>
+                                            <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+                                                <?php echo $erro; ?>
+                                            </div>
+                                    <?php endforeach; 
+                                        unset($_SESSION['error']);
                                     endif; ?>
+                                <div>
+                                    <img src="images/operadores.jpg" alt="operadores">
+                                </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="name">Operadora</label>
                                     <select name="operadora" class="form-control">
@@ -63,7 +75,7 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
                                     <label class="label" for="valor">Valor</label>
                                     <select name="valor" class="form-control">
                                         <option value="">selecione</option>
-                                        <option value="10">10</option>
+                                        <option value="10" <?php echo (isset($_POST['valor']) && $_POST['valor'] == '10') ? 'selected':''; ?>>10</option>
                                         <option value="20">20</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
