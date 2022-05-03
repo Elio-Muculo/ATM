@@ -1,6 +1,8 @@
-<?php 
-include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
+<?php
 session_start();
+
+include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
+
 
 ?>
 <!-- Page Content  -->
@@ -42,7 +44,7 @@ session_start();
                         <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                             <div>
-                                &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga é: 
+                                &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga da é: 
                                 <?php echo isset($_COOKIE["recarga"]) ? $_COOKIE["recarga"] : ''; ?>
                                 <?php  setcookie('recarga', null, -1, '/'); ?>
                             </div> 
@@ -51,20 +53,18 @@ session_start();
                     <div class="recarga-wrap p-2 p-md-2">
                             <form action="includes/recarga.inc.php" method="POST" class="signin-form">
                                     <?php 
-                                    if (isset($_SESSION["error"])) :
-                                        foreach($_SESSION['error'] as $erro) : ?>
+                                    if (isset($_SESSION['erro'])) : ?>
                                             <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
-                                                <?php echo $erro; ?>
+                                                <?php echo $_SESSION['erro']; ?>
                                             </div>
-                                    <?php endforeach; 
-                                        unset($_SESSION['error']);
-                                    endif; ?>
+                                       <?php  unset($_SESSION['erro']);
+                                    endif;  ?>
                                 <div>
-                                    <img src="images/operadores.jpg" alt="operadores">
+                                    <img src="images/operadores.png" alt="operadores">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="name">Operadora</label>
-                                    <select name="operadora" class="form-control">
+                                    <select name="operadora" class="form-control" required>
                                         <option value="">selecione</option>
                                         <option value="vodacom">Vodacom</option>
                                         <option value="tmcel">Tmcel</option>
@@ -73,9 +73,9 @@ session_start();
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="valor">Valor</label>
-                                    <select name="valor" class="form-control">
+                                    <select name="valor" class="form-control" required>
                                         <option value="">selecione</option>
-                                        <option value="10" <?php echo (isset($_POST['valor']) && $_POST['valor'] == '10') ? 'selected':''; ?>>10</option>
+                                        <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -84,7 +84,7 @@ session_start();
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="cel">Numero de telefone</label>
-                                <input type="tel" class="form-control" name="cel" required>
+                                <input type="tel" class="form-control" name="cel" placeholder="formato: +258-8x8000000" required>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit"  class="form-control btn btn-primary rounded submit px-3">Comprar</button>

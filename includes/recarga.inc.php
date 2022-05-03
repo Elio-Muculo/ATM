@@ -1,7 +1,7 @@
-<?php 
+<?php
+session_start();
 
 require_once 'validator.php';
-session_start();
 
 $campos = array('string' => $_POST['operadora'], 'int' => $_POST['cel'], 'int' => $_POST['valor']);
 
@@ -24,17 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['saldo'] -= 10;
                 $recarga = gerarCodigoRecarga(14);
                 setcookie("recarga", $recarga, 0, '/');
+                setcookie("operadora", $operadora, 0, '/');
                 header('Location: ../recarga.php');
                 exit(200);
             } else {
-                $error =  "Caro CLiente, forneça um numero de telefone válido.";
-                $_SESSION['error'] = $error;
+                $error =  "forneça um numero de telefone válido.";
+                $_SESSION['erro'] = $error;
                 header('Location: ../recarga.php');
-                exit(200);
+                exit();
             }
         } else {
             $error =  "saldo da conta é insuficiente para a compra.";
-            $_SESSION['error'] = $error;
+            $_SESSION['erro'] = $error;
             header('Location: ../recarga.php');
             exit;
         }
@@ -62,5 +63,9 @@ function gerarCodigoRecarga($lenght) {
 
 
 function validarNumero($numero) {
-    return true;
+    if (preg_match('/^\+(258)-(82|83|84|85|86|87)\d{7}$/', $numero)) {
+        if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
+            return true;
+        }
+    } 
 }
