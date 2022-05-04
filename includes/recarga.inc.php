@@ -14,12 +14,11 @@ foreach ($campos as $key => $value) {
 
 
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_SESSION['saldo'])) {
         // valor levantar + 10 devido a taxa de recarga.
         if (!($valor + 10 > $_SESSION['saldo'])) {
-            if (validarNumero($telefone)) {
+            if (validarNumero($telefone, $operadora)) {
                 $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
                 $_SESSION['saldo'] -= 10;
                 $recarga = gerarCodigoRecarga(14);
@@ -62,10 +61,38 @@ function gerarCodigoRecarga($lenght) {
 }
 
 
-function validarNumero($numero) {
-    if (preg_match('/^\+(258)-(82|83|84|85|86|87)\d{7}$/', $numero)) {
-        if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
-            return true;
-        }
-    } 
+function validarNumero($numero, $operadora) {
+    switch ($operadora) {
+        case 'vodacom':
+            if (preg_match('/^\+(258)-(84|85)\d{7}$/', $numero)) {
+                if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+            break;
+        case 'tmcel':
+            if (preg_match('/^\+(258)-(82|83)\d{7}$/', $numero)) {
+                if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+            break;
+        case 'movitel':
+            if (preg_match('/^\+(258)-(86|87)\d{7}$/', $numero)) {
+                if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+            break;
+        default:
+            'Operadora inexistente';
+            break;
+    }
 }
+
