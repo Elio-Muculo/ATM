@@ -21,7 +21,7 @@ function validarCampos($tipo, $campo) {
             if (!filter_var($campo, FILTER_VALIDATE_INT) === false) {
                 return true;
             } else {
-                throw new Exception("campo invalido");
+                throw new Exception("campo integer invalido");
             }
             break;
         default:

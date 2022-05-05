@@ -14,7 +14,7 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <p>Bem - vindo Caro Cliente #nome_do_usuario</p>
+                        <p>Bem - vindo Caro Cliente <?php  echo (isset($_COOKIE['nome'])) ? $_COOKIE['nome'] : ''; ?></p>
                     </ul>
                 </div>
             </div>
