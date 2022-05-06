@@ -68,3 +68,15 @@ function delete($id) {
 }
 
 function update($id) {}
+
+function changeUserState($sql, $data) {
+    global $conexao;
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->execute($data);
+
+    return $stmt->rowCount();
+}
+
+
+
