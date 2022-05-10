@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($countExist > 0) {
 
             $hashed_pass = readOne("SELECT senha FROM usuario WHERE numero_conta = :numero", ['numero' => $numero_conta]);
-            $pin = password_verify($pin, $hashed_pass['senha']) ? $hash_pass['senha'] : '';
+            $pin = password_verify($pin, $hashed_pass['senha']) ? $hashed_pass['senha'] : '';
            
             $accountChecked = countRow($sql, [':numero' => $numero_conta, ':pin' => $pin]);
 
@@ -46,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sql = "SELECT * FROM usuario WHERE numero_conta = :numero"; 
                     $dados = readOne($sql, [':numero' => $numero_conta]);
                     changeUserState("UPDATE usuario SET estado = 0 WHERE id = :id", ['id' => $dados['id']]);
-                    // $_SESSION['conta_negada'] = isset($_POST['user']) ? $_POST['user'] : '';
+
+    
                     $error[] = "<p>Atingiu o limite de 3 tentativas</p>";
                     $_SESSION['error'] = $error;
                     header('Location: ../index.php');

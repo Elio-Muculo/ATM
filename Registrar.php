@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!doctype html>
 <html lang="pt">
   <head>
@@ -12,7 +12,8 @@
 	
 	<link rel="stylesheet" href="css/style.css">
 
-	<title>Login</title>
+	<title>Registrar</title>
+
 	</head>
 	<body>
 	<section class="ftco-section">
