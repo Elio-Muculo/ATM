@@ -125,6 +125,9 @@ function changeUserState($sql, $data) {
  * @param string $sql 
  * query a ser feita executada
  * 
+ * @param mixed $dados
+ * dados a serem inseridos.
+ * 
  *@return int 
  * retorna 1 no caso de sucesso e 0 caso contrario.
  */

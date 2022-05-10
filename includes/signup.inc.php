@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $inserted = insertAll($sql, $dados);
 
         if ($inserted) {
+            //TODO enviar os dados por e-mail.
             setcookie("numero_conta", $numero_conta, 0, "/");
             header('Location: ../saldo.php');
             die();
@@ -45,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
 }
-
 
 
 // gerar codigo de 16 numeros de credelec.

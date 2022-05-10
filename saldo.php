@@ -26,6 +26,14 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
                 <li class="breadcrumb-item active" aria-current="page" style="color: #4c2d45;">consulta saldo</li>
             </ol>
         </nav>
+
+        <?php if (isset($_COOKIE['numero_conta'])) :  ?>
+                    <div class="alert alert-success d-flex align-items-center mb-3 align-right" role="alert">
+                        <?php echo "Bem - vindo, caro cliente! o seu numero da conta é: ".$_COOKIE['numero_conta']; ?>
+                    </div>
+                <?php setcookie("numero_conta", null, -3600, "/");
+            endif;?>
+    
         <?php if (isset($_SESSION['sucess'])) { ?>
             <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
