@@ -53,7 +53,7 @@
 							</div>
 
 						</form>
-		          		<p class="text-center">Ainda não tem uma conta: <a data-toggle="tab" href="#signup">Criar uma conta</a></p>
+		          		<p class="text-center">Ainda não tem uma conta: <a data-toggle="tab" href="Registrar.php">Criar uma conta</a></p>
 		       		 </div>
 		      	</div>
 			</div>

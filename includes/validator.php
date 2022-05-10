@@ -15,7 +15,7 @@ function validarCampos($tipo, $campo) {
             }
             break;
         case 'string':
-            $data = isset($data) ? filter_var($data, FILTER_SANITIZE_STRING) : false;
+            $data = isset($data) &&  !empty($data) ? strval($data) : false;
             break;
         case 'int':
             if (!filter_var($campo, FILTER_VALIDATE_INT) === false) {

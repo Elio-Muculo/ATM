@@ -44,6 +44,19 @@ function readOne($sql, $id) {
     return $data;
 }
 
+
+/**
+ * Ler os dados de um unico usuario.
+ * 
+ * @param string $sql 
+ * consulta da busca a ser feita com named parameters
+ * 
+ * @param array $id  
+ * id para filtrar a consulta e named param
+ * 
+ *@return mixed || false $array 
+ * retorna os dados de uma linha correspondente ao id falso na falha
+ */
 function readAll($sql, $data) {
     global $conexao;
 
@@ -54,6 +67,19 @@ function readAll($sql, $data) {
     return $result;
 }
 
+
+/**
+ * Ler os dados de um unico usuario.
+ * 
+ * @param string $sql 
+ * consulta da busca a ser feita com named parameters
+ * 
+ * @param array $id  
+ * id para filtrar a consulta e named param
+ * 
+ *@return mixed || false $array 
+ * retorna os dados de uma linha correspondente ao id falso na falha
+ */
 function countRow($sql, $data) {
     global $conexao;
 
@@ -69,6 +95,19 @@ function delete($id) {
 
 function update($id) {}
 
+
+/**
+ * Ler os dados de um unico usuario.
+ * 
+ * @param string $sql 
+ * consulta da busca a ser feita com named parameters
+ * 
+ * @param array $id  
+ * id para filtrar a consulta e named param
+ * 
+ *@return mixed || false $array 
+ * retorna os dados de uma linha correspondente ao id falso na falha
+ */
 function changeUserState($sql, $data) {
     global $conexao;
 
@@ -79,4 +118,23 @@ function changeUserState($sql, $data) {
 }
 
 
+
+/**
+ * Inserir todoa dados
+ * 
+ * @param string $sql 
+ * query a ser feita executada
+ * 
+ *@return int 
+ * retorna 1 no caso de sucesso e 0 caso contrario.
+ */
+function insertAll($sql, $dados) {
+    global $conexao;
+
+    $stmt = $conexao->prepare($sql);
+
+    $stmt->execute($dados);
+
+    return $stmt->rowCount();
+}
 

@@ -26,10 +26,10 @@
 					<div class="login-wrap p-4 p-md-5">
 						<div class="d-flex">
 							<div class="w-100">
-								<h3 class="mb-4">BEM-VINDO, CARO CLIENTE!</h3>
+								<h3 class="mb-4">CRIAR NOVA CONTA!</h3>
 							</div>
 						</div>
-						<form action="includes/login.inc.php" method="POST" class="signin-form">
+						<form action="includes/signup.inc.php" method="POST" class="signin-form">
 							<?php if (isset($_SESSION['error'])) : ?>
 										<?php 
 										if (isset($_SESSION["error"])) :
@@ -42,19 +42,22 @@
 										endif;
 								 endif; ?>
 							<div class="form-group mb-3">
-								<label class="label" for="name">Número da conta</label>
-								<input type="number" class="form-control" name="user" placeholder="introduzir número da conta" required>
+								<label class="label" for="name">Nome</label>
+								<input type="text" class="form-control" name="user" placeholder="introduzir número da conta" required>
 							</div>
 							<div class="form-group mb-3">
-								<label class="label" for="password">Código de autenticação</label>
+								<label class="label" for="password">Definir pin</label>
 							<input type="password" class="form-control" name="pin" placeholder="pin de 4 dígitos" required>
+							</div>
+							<div class="form-group mb-3">
+								<label class="label" for="password">Confirmar pin</label>
+							<input type="password" class="form-control" name="cpin" placeholder="pin de 4 dígitos" required>
 							</div>
 							<div class="form-group">
 								<button type="submit"  class="form-control btn btn-primary rounded submit px-3">Entrar</button>
 							</div>
 
 						</form>
-		          		<p class="text-center">Ainda não tem uma conta: <a data-toggle="tab" href="#signup">Criar uma conta</a></p>
 		       		 </div>
 		      	</div>
 			</div>
