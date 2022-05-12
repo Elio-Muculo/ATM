@@ -1,3 +1,17 @@
+<?php 
+
+session_start();
+
+if (!isset($_SESSION['logado'])) {
+    header('Location: index.php');
+    die();
+}
+
+$id = $_SESSION['id_user'];
+
+$dado = readOne("SELECT * FROM usuario WHERE id = :id", ['id' => $id]);
+
+?>
 <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
