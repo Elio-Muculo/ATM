@@ -1,5 +1,4 @@
 <?php 
-session_start();
 
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 
