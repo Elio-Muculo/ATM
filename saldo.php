@@ -15,9 +15,9 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <p>Bem - vindo Caro Cliente <?php
+                        <p>Bem - vindo Caro Cliente, <?php
                        
-                        echo ucfirst($dado['user']) ?? 'Desconhecido'; ?></p>
+                        echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?></p>
                     </ul>
                 </div>
             </div>
