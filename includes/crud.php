@@ -11,17 +11,6 @@ require_once __DIR__ . '/db.php';
 
 
 
-
-function insert($sql, $data) {
-    global $conexao;
-
-    $stmt = $conexao->prepare($sql);
-    $stmt->execute($data);
-
-    return $stmt->rowCount();
-}
-
-
 /**
  * Ler os dados de um unico usuario.
  * 

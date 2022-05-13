@@ -1,5 +1,6 @@
 <?php 
 require_once 'validator.php';
+require_once 'crud.php';
 session_start();
 
 $campos = array('int' => $_POST['contador'], 'int' => $_POST['valor']);
@@ -20,9 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
                 $_SESSION['saldo'] -= 10;
                 $recarga = gerarCodigoCredelec(14);
-                setcookie("recarga", $recarga, 0, '/');
-                header('Location: ../credelec.php');
-                exit(200);
+                $sql = "INSERT INTO credelec (codigo_recarga, data_compra, id_cliente) VALUES (:codigo, :data_compra, :id)";
+                $dados =  ['codigo' => $recarga, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
+                
+                if (insertAll($sql, $dados) == 1) {
+                    setcookie("recarga", $recarga, 0, '/');
+                    header('Location: ../credelec.php');
+                    exit(200);
+                }
             } else {
                 $error =  "Caro CLiente, forneça um numero de contador válido.";
                 $_SESSION['error'] = $error;

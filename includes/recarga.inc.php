@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'validator.php';
+require_once 'crud.php';
 
 $campos = array('string' => $_POST['operadora'], 'int' => $_POST['cel'], 'int' => $_POST['valor']);
 
@@ -9,6 +10,7 @@ foreach ($campos as $key => $value) {
     if (validarCampos($key, $value)) {
         $telefone = $_POST['cel'];
         $operadora = $_POST['operadora'];
+        $valor = $_POST['valor'];
     }
 }
 
@@ -22,10 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
                 $_SESSION['saldo'] -= 10;
                 $recarga = gerarCodigoRecarga(14);
-                setcookie("recarga", $recarga, 0, '/');
-                setcookie("operadora", $operadora, 0, '/');
-                header('Location: ../recarga.php');
-                exit(200);
+                $sql = "INSERT INTO credito (recarga, data_recarga, id_cliente) VALUES (:codigo, :data_compra, :id)";
+                $dados =  ['codigo' => $recarga, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
+                if (insertAll($sql, $dados) == 1) {
+                    setcookie("recarga", $recarga, 0, '/');
+                    setcookie("operadora", $operadora, 0, '/');
+                    header('Location: ../recarga.php');
+                    exit(200);
+                }
             } else {
                 $error =  "forneça um numero de telefone válido.";
                 $_SESSION['erro'] = $error;
