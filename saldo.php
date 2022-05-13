@@ -6,6 +6,8 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
     $_SESSION['saldo'] = 1000;
 }
 
+
+
 ?>
 <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5" style="width: 100%">
@@ -13,7 +15,9 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <p>Bem - vindo Caro Cliente <?php  echo (isset($_COOKIE['nome'])) ? $_COOKIE['nome'] : ''; ?></p>
+                        <p>Bem - vindo Caro Cliente <?php
+                       
+                        echo ucfirst($dado['user']) ?? 'Desconhecido'; ?></p>
                     </ul>
                 </div>
             </div>

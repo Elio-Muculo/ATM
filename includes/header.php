@@ -2,6 +2,8 @@
 
 session_start();
 
+include_once str_replace("\\", "/", dirname(__FILE__)). "/crud.php";
+
 if (!isset($_SESSION['logado'])) {
     header('Location: index.php');
     die();

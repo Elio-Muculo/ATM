@@ -4,7 +4,6 @@ require_once 'acesso_negado.php';
 require_once 'crud.php';
 require_once 'validator.php';
 
-$sql = "SELECT * FROM usuario WHERE numero_conta = :numero AND senha = :pin"; 
 
 
 // tentativas inicia com zero caso nao exista.
@@ -22,17 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     
     if (!empty($numero_conta) && !empty($pin)) {
-        $countExist = countRow("SELECT * FROM usuario WHERE numero_conta = :numero AND estado = :estado", [':numero' => $numero_conta, ':estado' => 1]);
+        $sql = "SELECT * FROM usuario WHERE numero_conta = :numero AND estado = :estado";
+        $countExist = countRow($sql, [':numero' => $numero_conta, ':estado' => 1]);
         if ($countExist > 0) {
-
-            $hashed_pass = readOne("SELECT senha FROM usuario WHERE numero_conta = :numero", ['numero' => $numero_conta]);
+            $sql = "SELECT senha FROM usuario WHERE numero_conta = :numero";
+            $hashed_pass = readOne($sql, ['numero' => $numero_conta]);
             $pin = password_verify($pin, $hashed_pass['senha']) ? $hashed_pass['senha'] : '';
            
+            
+            $sql = "SELECT * FROM usuario WHERE numero_conta = :numero AND senha = :pin"; 
             $accountChecked = countRow($sql, [':numero' => $numero_conta, ':pin' => $pin]);
 
             if ($accountChecked == 1) {
+                $dados = readOne($sql, [':numero' => $numero_conta, ':pin' => $pin]);
 				$_SESSION['logado'] = true;
-				setcookie("nome", $dados['numero_conta'], 0, '/');
 				$_SESSION['id_user'] = $dados['id'];
 				header('Location: ../saldo.php');
 				exit;
