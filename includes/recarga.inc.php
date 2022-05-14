@@ -11,21 +11,28 @@ foreach ($campos as $key => $value) {
         $telefone = $_POST['cel'];
         $operadora = $_POST['operadora'];
         $valor = $_POST['valor'];
+        $valor = $valor + 10;
     }
 }
+
+$id = $_SESSION['id_user']; 
+$sql = "SELECT * FROM saldo WHERE id_cliente = :id";
+$saldo = saldo($sql, [':id' => $id]);
+
 
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_SESSION['saldo'])) {
+    if (array_key_exists('saldo', $saldo)) {
         // valor levantar + 10 devido a taxa de recarga.
-        if (!($valor + 10 > $_SESSION['saldo'])) {
+        if (!($valor > $saldo['saldo'])) {
             if (validarNumero($telefone, $operadora)) {
-                $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
-                $_SESSION['saldo'] -= 10;
+                
+                levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $valor, 'id' => $_SESSION['id_user']]);
                 $recarga = gerarCodigoRecarga(14);
-                $sql = "INSERT INTO credito (recarga, data_recarga, id_cliente) VALUES (:codigo, :data_compra, :id)";
-                $dados =  ['codigo' => $recarga, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
+                $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
+                $dados =  ['tipo' => "recarga", 'valor' => $valor, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
+               
                 if (insertAll($sql, $dados) == 1) {
                     setcookie("recarga", $recarga, 0, '/');
                     setcookie("operadora", $operadora, 0, '/');

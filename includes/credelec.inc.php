@@ -8,22 +8,26 @@ $campos = array('int' => $_POST['contador'], 'int' => $_POST['valor']);
 foreach ($campos as $key => $value) {
     if (validarCampos($key, $value)) {
         $valor = $_POST['valor'];
+        $valor = $valor + 10;
         $contador = $_POST['contador'];
     }
 }
 
+$id = $_SESSION['id_user']; 
+$sql = "SELECT * FROM saldo WHERE id_cliente = :id";
+$saldo = saldo($sql, [':id' => $id]);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_SESSION['saldo'])) {
+    if (array_key_exists('saldo', $saldo)) {
         // valor levantar + 10 devido a taxa de recarga.
-        if (!($valor + 10 > $_SESSION['saldo'])) {
+        if (!($valor > $saldo['saldo'])) {
             if (validarNumeroContador($contador)) {
-                $_SESSION['saldo'] = $_SESSION['saldo'] - $valor;
-                $_SESSION['saldo'] -= 10;
-                $recarga = gerarCodigoCredelec(14);
-                $sql = "INSERT INTO credelec (codigo_recarga, data_compra, id_cliente) VALUES (:codigo, :data_compra, :id)";
-                $dados =  ['codigo' => $recarga, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
                 
+                levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $valor, 'id' => $_SESSION['id_user']]);
+                $recarga = gerarCodigoCredelec(14);
+                $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
+                $dados =  ['tipo' => "credelec", 'valor' => $valor, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
+               
                 if (insertAll($sql, $dados) == 1) {
                     setcookie("recarga", $recarga, 0, '/');
                     header('Location: ../credelec.php');

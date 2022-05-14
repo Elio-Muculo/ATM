@@ -82,8 +82,6 @@ function delete($id) {
 
 }
 
-function update($id) {}
-
 
 /**
  * Ler os dados de um unico usuario.
@@ -130,3 +128,23 @@ function insertAll($sql, $dados) {
     return $stmt->rowCount();
 }
 
+
+function saldo($sql, $dados) {
+    global $conexao;
+
+    $stmt = $conexao->prepare($sql);
+
+    $stmt->execute($dados);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+function levantar($sql, $dados) {
+    global $conexao;
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->execute($dados);
+
+    return $stmt->rowCount();
+}

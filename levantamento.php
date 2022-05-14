@@ -46,7 +46,7 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
                         </div>
                     <?php endif; ?>
                 <div class="form-group mb-3">
-                   <label class="label" for="password">Digite o valor deseja levantar.</label>
+                   <label class="label" for="valor">Digite o valor deseja levantar.</label>
                 <input type="number" class="form-control" name="valor"  required>
                 </div>
                 <div class="form-group">

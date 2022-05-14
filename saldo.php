@@ -2,11 +2,6 @@
 
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 
-if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
-    $_SESSION['saldo'] = 1000;
-}
-
-
 
 ?>
 <!-- Page Content  -->
@@ -15,8 +10,7 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <p>Bem - vindo Caro Cliente, <?php
-                       
+                        <p>Bem - vindo caro cliente, <?php
                         echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?></p>
                     </ul>
                 </div>
@@ -35,18 +29,17 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
                         <?php echo "Bem - vindo, caro cliente! o seu numero da conta é: ".$_COOKIE['numero_conta']; ?>
                     </div>
                 <?php setcookie("numero_conta", null, -3600, "/");
-            endif;?>
+            endif; ?>
     
-        <?php if (isset($_SESSION['sucess'])) { ?>
+        <?php if (isset($_SESSION['sucess'])) : ?>
             <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                 <div>
-                    &nbsp;&nbsp;&nbsp;
                     <?php echo $_SESSION["sucess"] ?? ''; ?>
                     <?php unset($_SESSION['sucess']); ?>
                 </div>
             </div>
-       <?php  } ?>
+       <?php  endif; ?>
         <div class="row">
             <div class="col-md-4">
                 <div class="card text-dark bg-light mb-3" style="max-width: 18rem; visibility: hidden;">
@@ -72,7 +65,7 @@ if (!isset($_SESSION['saldo']) || $_SESSION['saldo'] <= 10) {
                 <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header">Saldo Actual</div>
                     <div class="card-body">
-                        <h5 class="card-title">MZN <?php echo (isset($_SESSION['saldo'])) ? $_SESSION['saldo'].",00" : "0,00"; ?></h5>
+                        <h5 class="card-title">MZN <?php echo $saldo['saldo'].",00"; ?></h5>
                     </div>
                 </div>
             </div>
