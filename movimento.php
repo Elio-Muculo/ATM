@@ -11,7 +11,7 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <p>Bem - vindo Caro Cliente, <?php 
+                        <p>Bem - vindo, <?php 
                                echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
                         </p>
                     </ul>
