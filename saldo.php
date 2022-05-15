@@ -2,7 +2,6 @@
 
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 
-
 ?>
 <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5" style="width: 100%">

@@ -1,17 +1,28 @@
 <?php 
 
-if (isset($_SESSION['conta_negada'])) {
+function bloquearConta($dados) {
+    if (array_key_exists('estado', $dados)) {
+        if ($dados['estado'] == 0) {
+            //vereficar se a contagem ja terminou.
+            // 1 hora = 60 min = 3600s
+            // 3 horas = 180 = 10800s
+            if (!isset($tempo_bloqueio)) {
+                $tempo_bloqueio = tempoBloqueioConta(30);
+            }
 
-    //vereficar se a contagem ja terminou.
-        // 1 hora = 60 min = 3600s
-        // 3 horas = 180 = 10800s
-    if(tempoBloqueioConta(10800) < 1) {
-        $_SESSION['conta_negada'] = 0;
-        session_destroy();
-        header('Location: ../saldo.php');
-        exit();
+            if($tempo_bloqueio < 1) {
+                changeUserState("UPDATE usuario SET estado = 1 WHERE id = :id", ['id' => $dados['id']]); 
+                session_destroy();
+
+                $error[] = "<p>A conta foi desbloqueada</p>";
+                $_SESSION['error'] = $error;
+                header('Location: ../index.php');
+                exit();
+            }
+        }
     }
-} 
+}
+
 
 // @tempo - o tempo que a conta estara bloqueada em segundos
 // retorna o tempo em segundos que falta para desbloquear a conta
