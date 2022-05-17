@@ -1,7 +1,13 @@
 <?php 
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
+include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/crud.php";
 
+
+$sql = "SELECT * FROM movimento WHERE id_cliente = :id ORDER BY data_movimento DESC LIMIT 5 ";
+$dados = readAll($sql, [':id' => $_SESSION['id_user']]);
 ?>
+
+
 
 
 
@@ -12,7 +18,7 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <p>Bem - vindo, <?php 
-                               echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
+                            echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
                         </p>
                     </ul>
                 </div>
@@ -32,10 +38,40 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
             </symbol>
         </svg>
         
-        <section class="rc-section ">
-          <div class="container">
-            
-          </div>
+        <section class="rc-section mt-4">
+            <div class="container">
+                <div class="d-grid gap-2 d-md-block">
+                    <input type="text" class="ml-3">
+                    <input type="text" class="ml-3">
+                    <input type="text" class="ml-3">
+                    <button class="btn btn-primary ml-5" type="button">Filtrar</button>
+                </div>
+
+                <table class="table table-striped mt-5 pt-4">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Movimento</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($dados as $d):?>
+                        <tr>
+                            <td><?php echo $d['id']; ?></td>
+                            <td><?php echo $d['tipo_operacao']; ?></td>
+                            <td><?php echo $d['valor']; ?></td>
+                            <td><?php echo $d['data_movimento']; ?></td>
+                        </tr>
+                       
+                        <?php endforeach; ?>
+                        <tr class="align-right">
+                            <td><a href="/templates/gerarPdf.php"><button class="btn btn-primary">Baixar Factura</button></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 	    </section>        
     </div>
 </div>

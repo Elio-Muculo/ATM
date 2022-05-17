@@ -148,3 +148,4 @@ function levantar($sql, $dados) {
 
     return $stmt->rowCount();
 }
+
