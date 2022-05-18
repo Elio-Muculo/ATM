@@ -25,6 +25,35 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
               <li class="breadcrumb-item active" aria-current="page" style="color: #4c2d45;">Credelec</li>
             </ol>
         </nav>
+
+
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Relatório de Credelec</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body alert alert-info">
+                <p style="color: #000;">Ref: xxxe0000</p>
+                <p style="color: #000;">Contador: <?= strtoupper($_SESSION['numero']) ?? '' ?></p>
+                <p style="color: #000;">valor recarga: <?= $_SESSION['valor'] . " MZN" ?? '' ?></p>
+                <p style="color: #000;">Código recarga: <?= $_SESSION['recarga'] ?? '' ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="/templates/credelecPdf.php">
+                    <button type="button" class="btn btn-primary">Imprimir Recibo</button>
+                </a>
+            </div>
+            </div>
+        </div>
+        </div>
+
         
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -35,33 +64,22 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
         <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
             <div>
-                &nbsp;&nbsp;&nbsp; Caro Cliente, essa funcionalidade tem o custo de 10,00 MZN.
+                 Caro Cliente, essa funcionalidade tem o custo de 10,00 MZN.
             </div>
         </div>
         
-
-        <?php if (isset($_COOKIE['recarga'])) { ?>
-            <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                    &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga é: 
-                    <?php echo isset($_COOKIE["recarga"]) ? $_COOKIE["recarga"] : ''; ?>
-                    <?php  setcookie('recarga', null, -1, '/'); ?>
-                </div> 
-            </div>
-       <?php  } ?>
         
    
         <div class="row justify-content-center mt-3 ">
             <form action="includes/credelec.inc.php" method="POST" class="signin-form">
-                <?php if (isset($_SESSION['error'])) { ?>
+                <?php if (isset($_SESSION['error'])) : ?>
                     <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
                         <div> 
-                            <?php echo isset($_SESSION["error"]) ? $_SESSION["error"] : ''; ?>
+                            <?= $_SESSION["error"]; ?>
                             <?php unset($_SESSION['error']); ?>
                         </div> 
                     </div>
-                <?php  } ?>
+                <?php  endif; ?>
                 <div class="form-group mb-3"  style="width: 450px;">
                    <label class="label" for="contador">Digite o codigo contador.</label>
                 <input type="text" class="form-control" name="contador">
@@ -80,8 +98,14 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+        /**
+         * Pegar a mensagem na url #Hash e mostrar o modal se for correspondente
+         */
+        if (window.location.hash == "#credelec") {
+            $("#exampleModal").modal("show");
+        }
+</script>
+
 </body>
 </html>

@@ -30,7 +30,7 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
             </div>
             <div class="modal-body alert alert-info">
                 <p style="color: #000;">Ref: xxx0000</p>
-                <p style="color: #000;">Código recarga: <?= strtoupper($_SESSION['operadora']) ?? '' ?></p>
+                <p style="color: #000;">Operadora: <?= strtoupper($_SESSION['operadora']) ?? '' ?></p>
                 <p style="color: #000;">valor recarga: <?= $_SESSION['valor'] . " MZN" ?? '' ?></p>
                 <p style="color: #000;">Código recarga: <?= $_SESSION['recarga'] ?? '' ?></p>
             </div>

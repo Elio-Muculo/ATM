@@ -4,8 +4,8 @@ include_once "../includes/crud.php";
 
 $id = $_SESSION['id_user'];
 
-$sql = "SELECT * FROM credito r INNER JOIN usuario u ON r.id_cliente = u.id WHERE r.id_cliente = :id ORDER BY r.id DESC LIMIT 1";
-$dado = readAll($sql, ['id' => $id]);
+$sql = "SELECT * FROM usuario r WHERE r.id = :id ORDER BY r.id DESC LIMIT 1";
+$dado = readOne($sql, ['id' => $id]);
 
 ?>
 
@@ -36,7 +36,7 @@ $dado = readAll($sql, ['id' => $id]);
         width: 100%; box-shadow: 0px 0px 15px 8px rgba(186,186,186,0.85)">
     <h5>A T M - ELIO MUCULO</h5>
     <div>
-        <p>Nome: <?= ucfirst($dado[0]['user']); ?></p>
+        <p>Nome: <?= ucfirst($dado['user']); ?></p>
         <p>Data de emissão: <?= date("d-m-Y H:i:s")?></p>
     </div>
 </div>
@@ -48,21 +48,16 @@ $dado = readAll($sql, ['id' => $id]);
     <thead>
         <tr>
             <th scope="col">Recarga</th>
-            <th scope="col">Operadora</th>
+            <th scope="col">N.º Contador</th>
             <th scope="col">Valor</th>
-            <th scope="col">Data</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($dado as $d):?>
         <tr  style="background-color: #bababa;">
             <td ><?= $_SESSION['recarga']; ?></td>
-            <td><?= ucfirst($_SESSION['operadora']); ?></td>
+            <td><?= ucfirst($_SESSION['numero']); ?></td>
             <td  style="padding: 4px 0; margin: 3px 0;"><?= $_SESSION['valor'] . " MZN"; ?></td>
-            <td><?= $d['data_recarga']; ?></td>
         </tr>
-        
-        <?php endforeach; ?>
     </tbody>
 </table>
 

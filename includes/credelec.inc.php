@@ -8,7 +8,7 @@ $campos = array('int' => $_POST['contador'], 'int' => $_POST['valor']);
 foreach ($campos as $key => $value) {
     if (validarCampos($key, $value)) {
         $valor = $_POST['valor'];
-        $valor = $valor + 10;
+        $valor = $valor + 10; // valor levantar + 10 devido a taxa de recarga.
         $contador = $_POST['contador'];
     }
 }
@@ -19,22 +19,23 @@ $saldo = saldo($sql, [':id' => $id]);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (array_key_exists('saldo', $saldo)) {
-        // valor levantar + 10 devido a taxa de recarga.
         if (!($valor > $saldo['saldo'])) {
             if (validarNumeroContador($contador)) {
-                
+                $valor = $valor - 10; // salvar o valor correcto ex: 100 e, não 110 na BD
                 levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $valor, 'id' => $_SESSION['id_user']]);
                 $recarga = gerarCodigoCredelec(14);
                 $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
                 $dados =  ['tipo' => "credelec", 'valor' => $valor, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
                
                 if (insertAll($sql, $dados) == 1) {
-                    setcookie("recarga", $recarga, 0, '/');
-                    header('Location: ../credelec.php');
+                    $_SESSION['recarga'] = $recarga;
+                    $_SESSION['numero'] = $contador;
+                    $_SESSION['valor'] = $valor;
+                    header('Location: ../credelec.php#credelec');
                     exit(200);
                 }
             } else {
-                $error =  "Caro CLiente, forneça um numero de contador válido.";
+                $error =  "Caro Cliente, forneça um numero de contador válido.";
                 $_SESSION['error'] = $error;
                 header('Location: ../credelec.php');
                 exit(200);
@@ -46,11 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
     }  else {
-       echo "sem saldo";
+        $error =  "indice saldo indefinido na base dados.";
+        $_SESSION['error'] = $error;
+        header('Location: ../credelec.php');
+        exit;
     }  
 }
 
 
+/**
+ * TODO fix this docs
+ */
 // verificar se o numero fornecido é valido deve ser 12 digitos.
 function validarNumeroContador($numero) {
     if (validarCampos('int', $numero)) {
@@ -61,6 +68,10 @@ function validarNumeroContador($numero) {
 }
 
 
+
+/**
+ * TODO fix this docs
+ */
 // gerar codigo de 16 numeros de credelec.
 function gerarCodigoCredelec($lenght) {
     $char = "1234567890";
