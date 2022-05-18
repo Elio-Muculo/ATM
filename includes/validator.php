@@ -1,7 +1,10 @@
 <?php 
 
-/* @tipo  */
-function validarCampos($tipo, $campo) {
+/**
+ * 
+ * TODO fornecer documentacao do metodo
+ **/
+ function validarCampos($tipo, $campo) {
     trim($campo); // remover espacos
 	htmlentities($campo); // escapar caracteres especiais
 	stripslashes($campo); // remove \ do input
@@ -11,7 +14,7 @@ function validarCampos($tipo, $campo) {
             if (!empty($campo) && filter_var($campo, FILTER_VALIDATE_EMAIL)) {
                 return true;
             } else {
-                throw new Exception("");
+                return false;
             }
             break;
         case 'string':
@@ -21,7 +24,7 @@ function validarCampos($tipo, $campo) {
             if (!filter_var($campo, FILTER_VALIDATE_INT) === false) {
                 return true;
             } else {
-                throw new Exception("campo integer invalido");
+                return false;
             }
             break;
         default:

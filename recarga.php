@@ -1,8 +1,7 @@
 <?php
 include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
-
-
 ?>
+
 <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5" style="width: 100%;">
         <nav class="navbar navbar-expand-lg navbar-white bg-light rounded shadow-sm mb-4">
@@ -10,13 +9,40 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <p>
-                        Bem - vindo Caro Cliente,
-                            <?php echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
+                        Bem - vindo,
+                            <?= ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
                         </p>
                     </ul>
                 </div>
             </div>
         </nav>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Relatório de Recarga </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body alert alert-info">
+                <p style="color: #000;">Ref: xxx0000</p>
+                <p style="color: #000;">Código recarga: <?= strtoupper($_SESSION['operadora']) ?? '' ?></p>
+                <p style="color: #000;">valor recarga: <?= $_SESSION['valor'] . " MZN" ?? '' ?></p>
+                <p style="color: #000;">Código recarga: <?= $_SESSION['recarga'] ?? '' ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="/templates/recargaPdf.php">
+                    <button type="button" class="btn btn-primary">Imprimir Recibo</button>
+                </a>
+            </div>
+            </div>
+        </div>
+        </div>
 
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -34,32 +60,24 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
         <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
             <div>
-                &nbsp;&nbsp;&nbsp; Caro Cliente, essa funcionalidade tem o custo de 10,00 MZN.
+                Caro Cliente, essa operação tem o custo de 10,00 MZN.
             </div>
         </div>
         
         <section class="rc-section ">
 		    <div class="container ">
                 <div class="row justify-content-center">
-                <?php if (isset($_COOKIE['recarga'])) { ?>
-                        <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                            <div>
-                                &nbsp;&nbsp;&nbsp; Caro Cliente, o codigo da sua recarga da é: 
-                                <?php echo isset($_COOKIE["recarga"]) ? $_COOKIE["recarga"] : ''; ?>
-                               
-                            </div> 
-                        </div>
-                <?php  } ?>
+
                     <div class="recarga-wrap p-2 p-md-2">
                             <form action="includes/recarga.inc.php" method="POST" class="signin-form">
                                     <?php 
                                     if (isset($_SESSION['erro'])) : ?>
                                             <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
-                                                <?php echo $_SESSION['erro']; ?>
+                                                <?= $_SESSION['erro']; ?>
                                             </div>
                                        <?php  unset($_SESSION['erro']);
-                                    endif;  ?>
+                                    endif;  
+                                    ?>
                                 <div>
                                     <img src="images/operadores.png" alt="operadores">
                                 </div>
@@ -99,6 +117,14 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
     </div>
 </div>
 
+<script>
+        /**
+         * Pegar a mensagem na url #Hash e mostrar o modal se for correspondente
+         */
+        if (window.location.hash == "#mensagem") {
+            $("#exampleModal").modal("show");
+        }
+</script>
 
 </body>
 </html>

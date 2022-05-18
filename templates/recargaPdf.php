@@ -14,7 +14,7 @@ $dompdf = new Dompdf();
 
 ob_start();
 
-require 'template_movimento.php';
+require 'template_recarga.php';
 
 $data = ob_get_contents();
 
@@ -30,7 +30,7 @@ $dompdf->loadHtml($data);
 
 // Definindo o papel e a orientação
 
-$dompdf->setPaper('A5', 'portrait');
+$dompdf->setPaper('A5', 'landscape');
 
 // Renderizando o HTML como PDF
 

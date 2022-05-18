@@ -4,14 +4,8 @@ include_once "../includes/crud.php";
 
 $id = $_SESSION['id_user'];
 
-$sql = "SELECT * FROM movimento m INNER JOIN usuario u ON m.id_cliente = u.id WHERE m.id_cliente = :id";
-
-$dado = readOne($sql, ['id' => $id]);
-
-
-$sql = "SELECT * FROM movimento WHERE id_cliente = :id ORDER BY data_movimento DESC LIMIT 8 ";
-$dados = readAll($sql, [':id' => $_SESSION['id_user']]);
-
+$sql = "SELECT * FROM credito r INNER JOIN usuario u ON r.id_cliente = u.id WHERE r.id_cliente = :id ORDER BY r.id DESC LIMIT 1";
+$dado = readAll($sql, ['id' => $id]);
 
 ?>
 
@@ -26,9 +20,9 @@ $dados = readAll($sql, [':id' => $_SESSION['id_user']]);
 
 <style>
     .line {
-        margin-top: 15px;
+        margin-top: 25px;
         height: 2px;
-        width: 90%;
+        width: 95%;
         background-color: #4c2d45;
     }
 </style>
@@ -42,9 +36,8 @@ $dados = readAll($sql, [':id' => $_SESSION['id_user']]);
         width: 100%; box-shadow: 0px 0px 15px 8px rgba(186,186,186,0.85)">
     <p>A T M - ELIO MUCULO</p>
     <div>
-        <p>Nome: <?= ucfirst($dado['user']); ?></p>
+        <p>Nome: <?= ucfirst($dado[0]['user']); ?></p>
         <p>Data de emissão: <?= date("d-m-Y H:i:s")?></p>
-        <p>N.º da conta#: <?= $dado['numero_conta']?></p>
     </div>
 </div>
 
@@ -54,19 +47,19 @@ $dados = readAll($sql, [':id' => $_SESSION['id_user']]);
 <table width="100%"  style="text-align: center; padding: 30px 0;">
     <thead>
         <tr>
-            <th scope="col"  style="padding: 6px 0;">#</th>
-            <th scope="col">Movimento</th>
+            <th scope="col">Recarga</th>
+            <th scope="col">Operadora</th>
             <th scope="col">Valor</th>
             <th scope="col">Data</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($dados as $d):?>
+        <?php foreach ($dado as $d):?>
         <tr  style="background-color: #bababa;">
-            <td  style="padding: 6px 0; margin: 3px 0;"><?php echo $d['id']; ?></td>
-            <td ><?php echo $d['tipo_operacao']; ?></td>
-            <td><?php echo $d['valor']. ".00 MZN"; ?></td>
-            <td><?php echo $d['data_movimento']; ?></td>
+            <td ><?= $_SESSION['recarga']; ?></td>
+            <td><?= ucfirst($_SESSION['operadora']); ?></td>
+            <td  style="padding: 4px 0; margin: 3px 0;"><?= $_SESSION['valor']; ?></td>
+            <td><?= $d['data_recarga']; ?></td>
         </tr>
         
         <?php endforeach; ?>
@@ -76,8 +69,8 @@ $dados = readAll($sql, [':id' => $_SESSION['id_user']]);
 <hr class="line">
 
 
-<div style="margin-top: 55px; text-align: center;">
-            <p>Copyright &copy; <?= date("Y"); ?> -  Todos direitos reservados <i class="icon-heart" aria-hidden="true"></i>
+<div style="margin-top: 35px; text-align: center;">
+            <p>Copyright &copy; <?= date("Y"); ?> - Todos direitos reservados <i class="icon-heart" aria-hidden="true"></i>
 </div>
 
 </body>

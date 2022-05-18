@@ -11,7 +11,7 @@ foreach ($campos as $key => $value) {
         $telefone = $_POST['cel'];
         $operadora = $_POST['operadora'];
         $valor = $_POST['valor'];
-        $valor = $valor + 10;
+        $valor = $valor + 10; // valor levantar + 10 devido a taxa de recarga.
     }
 }
 
@@ -24,19 +24,20 @@ $saldo = saldo($sql, [':id' => $id]);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (array_key_exists('saldo', $saldo)) {
-        // valor levantar + 10 devido a taxa de recarga.
         if (!($valor > $saldo['saldo'])) {
             if (validarNumero($telefone, $operadora)) {
                 
+                $valor = $valor - 10; // salvar o valor correcto ex: 100 e, não 110 na BD.
                 levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $valor, 'id' => $_SESSION['id_user']]);
                 $recarga = gerarCodigoRecarga(14);
                 $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
                 $dados =  ['tipo' => "recarga", 'valor' => $valor, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
-               
+
                 if (insertAll($sql, $dados) == 1) {
-                    setcookie("recarga", $recarga, 0, '/');
-                    setcookie("operadora", $operadora, 0, '/');
-                    header('Location: ../recarga.php');
+                    $_SESSION['recarga'] = $recarga;
+                    $_SESSION['operadora'] = $operadora;
+                    $_SESSION['valor'] = $valor;
+                    header('Location: ../recarga.php?#mensagem');
                     exit(200);
                 }
             } else {
@@ -49,16 +50,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error =  "saldo da conta é insuficiente para a compra.";
             $_SESSION['erro'] = $error;
             header('Location: ../recarga.php');
-            exit;
+            exit();
         }
     }  else {
-       echo "sem saldo";
+        $error =  "indice saldo não esta definido na base dados.";
+        $_SESSION['erro'] = $error;
+        header('Location: ../recarga.php');
+        exit();
     }  
 }
 
 
-
-// gerar codigo de 16 numeros de credelec.
+ 
+/**
+ * gerar codigo de 16 numeros de credelec.
+ * TODO documentacao correcta
+ */
 function gerarCodigoRecarga($lenght) {
     $char = "1234567890";
     $charLenght = strlen($char);
@@ -74,6 +81,10 @@ function gerarCodigoRecarga($lenght) {
 }
 
 
+/**
+ * gerar codigo de 16 numeros de credelec.
+ * TODO documentacao correcta
+ */
 function validarNumero($numero, $operadora) {
     switch ($operadora) {
         case 'vodacom':
