@@ -9,12 +9,38 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <p>Bem - vindo, 
-                            <?php echo ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
+                            <?= ucfirst($dado['user'])."." ?? 'Desconhecido'; ?>
                         </p>
                     </ul>
                 </div>
             </div>
         </nav>
+
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Relatório Levantamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body alert alert-info">
+                <p style="color: #000;">Ref: xxxL0000</p>
+                <p style="color: #000;">Valor Levantado: <?= $_SESSION['levantado'] . " MZN"; ?></p>
+                <p style="color: #000;">Saldo Contabilístico: <?= $_SESSION['saldo'] . " MZN"; ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="/templates/levantamentoPdf.php">
+                    <button type="button" class="btn btn-primary">Imprimir Recibo</button>
+                </a>
+            </div>
+            </div>
+        </div>
+        </div>
 
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -38,10 +64,10 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
         
         <div class="row justify-content-center mt-5 pt-4">
             <form action="includes/levantamento.inc.php" method="POST" class="">
-                    <?php if (isset($_SESSION['msg'])) : ?>
+                    <?php if (isset($_SESSION['erro'])) : ?>
                         <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
-                            <?php echo $_SESSION['msg']; 
-                            unset($_SESSION['msg']);
+                            <?php echo $_SESSION['erro']; 
+                            unset($_SESSION['erro']);
                             ?>
                         </div>
                     <?php endif; ?>
@@ -58,6 +84,11 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
     </div>
 </div>
 
+<script>
+        if (window.location.hash == "#levantar") {
+            $("#exampleModal").modal("show");
+        }
+</script>
 
 </body>
 </html>

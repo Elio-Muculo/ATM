@@ -24,21 +24,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!($levantar > $saldo['saldo'])) {
             $retorno = levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $levantar, 'id' => $_SESSION['id_user']]);
             if ($retorno === 1) {
+                $levantar =  $levantar - 10;
                 $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
                 $dados =  ['tipo' => "levantamento", 'valor' => $levantar, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
                
                 insertAll($sql, $dados);
+                $_SESSION['levantado'] = $levantar;
                 $_SESSION['msg'] = "Caro cliente, o seu levantamento foi efectuado com sucesso.";
-                header('Location: ../levantamento.php');
+                header('Location: ../levantamento.php#levantar');
                 exit;
             }
         } else {
-            $_SESSION['msg'] = "Caro cliente, o seu levantamento não foi efectuado, saldo negativo.";
+            $_SESSION['erro'] = "Caro cliente, o seu levantamento não foi efectuado, saldo negativo.";
             header('Location: ../levantamento.php');
             exit;
         }
     }  else {
-        echo "sem saldo";
+        $_SESSION['erro'] = "Caro cliente, o seu levantamento não foi efectuado, saldo negativo.";
+        header('Location: ../levantamento.php');
+        exit;echo "sem saldo";
     }  
 }
 

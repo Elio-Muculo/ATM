@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (array_key_exists('saldo', $saldo)) {
         if (!($valor > $saldo['saldo'])) {
             if (validarNumeroContador($contador)) {
-                $valor = $valor - 10; // salvar o valor correcto ex: 100 e, não 110 na BD
                 levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $valor, 'id' => $_SESSION['id_user']]);
+                $valor = $valor - 10; // salvar o valor correcto ex: 100 e, não 110 na BD
                 $recarga = gerarCodigoCredelec(14);
                 $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
                 $dados =  ['tipo' => "credelec", 'valor' => $valor, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];

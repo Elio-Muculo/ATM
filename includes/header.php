@@ -15,7 +15,7 @@ $dado = readOne("SELECT * FROM usuario WHERE id = :id", ['id' => $id]);
 
 $sql = "SELECT * FROM saldo WHERE id_cliente = :id";
 $saldo = saldo($sql, [':id' => $id]);
-
+$_SESSION['saldo'] = $saldo['saldo'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-pt">

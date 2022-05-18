@@ -1,8 +1,8 @@
 
 # Tarefas por fazer 
 - [x] - **Factura de recarga** <br>
-- [ ] - factura de recarga <br>
-- [ ] - factura de credelec <br>
+- [x] - factura de credelec <br>
+- [ ] - factura de levantamento <br>
 - [ ] - logout no menu <br>
 - [ ] - organizar msg erro e sucesso<br>
 - [ ] - melhorar design <br>

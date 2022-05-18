@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!($valor > $saldo['saldo'])) {
             if (validarNumero($telefone, $operadora)) {
                 
-                $valor = $valor - 10; // salvar o valor correcto ex: 100 e, não 110 na BD.
                 levantar("UPDATE saldo SET saldo = saldo - :levantar WHERE id_cliente = :id", [':levantar' => $valor, 'id' => $_SESSION['id_user']]);
+                $valor = $valor - 10; // salvar o valor correcto ex: 100 e, não 110 na BD.
                 $recarga = gerarCodigoRecarga(14);
                 $sql = "INSERT INTO movimento (tipo_operacao, valor, data_movimento, id_cliente) VALUES (:tipo, :valor, :data_compra, :id)";
                 $dados =  ['tipo' => "recarga", 'valor' => $valor, 'data_compra' => date("Y-m-d H:i:s"), 'id' => intval($_SESSION['id_user'])];
