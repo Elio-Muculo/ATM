@@ -32,6 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "INSERT INTO usuario (numero_conta, user, senha, estado, data_login) VALUES (:numero, :user, :senha, :estado, :datalogin)";
         $inserted = insertAll($sql, $dados);
 
+        if ($inserted == 1) {
+            $id = readOne("SELECT id FROM usuario ORDER BY id DESC LIMIT 1");
+
+            insertAll("INSERT INTO saldo (saldo, id_cliente) VALUES (10000, :id)", [':id' => $id['id']]);
+        }
+
         if ($inserted) {
             //TODO enviar os dados por e-mail.
             setcookie("numero_conta", $numero_conta, 0, "/");

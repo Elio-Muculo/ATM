@@ -57,6 +57,9 @@ $_SESSION['saldo'] = $saldo['saldo'];
             <li>
                 <a href="credelec.php">Credelec</a>
             </li>
+            <li>
+                <a href="includes/sair.php">Sair</a>
+            </li>
         </ul>
 
         <div class="footer pt-4">

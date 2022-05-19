@@ -7,15 +7,13 @@ function bloquearConta($dados) {
             // 1 hora = 60 min = 3600s
             // 3 horas = 180 = 10800s
             if (!isset($tempo_bloqueio)) {
-                $tempo_bloqueio = tempoBloqueioConta(30);
+                $tempo_bloqueio = tempoBloqueioConta(20);
             }
 
             if($tempo_bloqueio < 1) {
-                changeUserState("UPDATE usuario SET estado = 1 WHERE id = :id", ['id' => $dados['id']]); 
+                changeUserState("UPDATE usuario SET estado = 1, tentativas = 0 WHERE id = :id", ['id' => $dados['id']]); 
                 session_destroy();
-
-                $error[] = "<p>A conta foi desbloqueada</p>";
-                $_SESSION['error'] = $error;
+                setcookie("msg", "A conta do usuario foi desbloqueada", time() + 3, "/");
                 header('Location: ../index.php');
                 exit();
             }

@@ -23,7 +23,7 @@ require_once __DIR__ . '/db.php';
  *@return mixed || false $array 
  * retorna os dados de uma linha correspondente ao id falso na falha
  */
-function readOne($sql, $id) {
+function readOne($sql, $id = []) {
     global $conexao;
 
     $stmt = $conexao->prepare($sql);
@@ -46,7 +46,7 @@ function readOne($sql, $id) {
  *@return mixed || false $array 
  * retorna os dados de uma linha correspondente ao id falso na falha
  */
-function readAll($sql, $data) {
+function readAll($sql, $data = []) {
     global $conexao;
 
     $stmt = $conexao->prepare($sql);
@@ -69,7 +69,7 @@ function readAll($sql, $data) {
  *@return mixed || false $array 
  * retorna os dados de uma linha correspondente ao id falso na falha
  */
-function countRow($sql, $data) {
+function countRow($sql, $data = []) {
     global $conexao;
 
     $stmt = $conexao->prepare($sql);

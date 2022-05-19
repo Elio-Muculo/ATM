@@ -30,17 +30,19 @@
 							</div>
 						</div>
 						<form action="includes/login.inc.php" method="POST" class="signin-form">
-							<?php if (isset($_SESSION['error'])) : ?>
-										<?php 
-										if (isset($_SESSION["error"])) :
+							<?php if (isset($_SESSION['error'])) : 
 											foreach($_SESSION['error'] as $erro) : ?>
 												<div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
-													<?php echo $erro; ?>
+													<?= $erro; ?>
 												</div>
-										<?php endforeach; 
+									<?php endforeach; 
 											unset($_SESSION['error']);
-										endif;
 								 endif; ?>
+								 <?php if (isset($_COOKIE['msg'])) : ?>
+												<div class="alert alert-info d-flex align-items-center mb-3" role="alert">
+													<?= $_COOKIE['msg']; ?>
+												</div>
+								 <?php endif; ?>
 							<div class="form-group mb-3">
 								<label class="label" for="name">Número da conta</label>
 								<input type="number" class="form-control" name="user" placeholder="introduzir número da conta" required>
