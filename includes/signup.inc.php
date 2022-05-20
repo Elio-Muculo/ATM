@@ -36,12 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = readOne("SELECT id FROM usuario ORDER BY id DESC LIMIT 1");
 
             insertAll("INSERT INTO saldo (saldo, id_cliente) VALUES (10000, :id)", [':id' => $id['id']]);
-        }
-
-        if ($inserted) {
-            //TODO enviar os dados por e-mail.
-            setcookie("numero_conta", $numero_conta, 0, "/");
-            header('Location: ../saldo.php');
+            $_SESSION['conta'] = $numero_conta;
+            header('Location: ../index.php#signUp');
             die();
         } else {
             $error[] = "<p>Os dados não foram inseridos</p>";

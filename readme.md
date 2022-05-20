@@ -4,12 +4,12 @@
 - [x] - factura de credelec <br>
 - [x] - factura de levantamento <br>
 - [x] - logout no menu <br>
+- [x] - adicionar relatorio ao criar nova conta (signUp)
+- [x] - usar trigger para inserir saldo ao criar nova conta (saldo - usuario)
 - [ ] - organizar msg erro e sucesso<br>
-- [ ] - melhorar design <br>
 - [ ] - classe crud organizar <br>
 - [ ] - refactorar codigo e funcoes <br>
-- [ ] - adicionar relatorio ao criar nova conta (signUp)
-- [x] - usar trigger para inserir saldo ao criar nova conta (saldo - usuario)
+- [ ] - melhorar design <br>
 
 `code = with smile `
 <br>

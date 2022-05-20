@@ -21,19 +21,13 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
             </div>
         </nav>
 
+
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page" style="color: #4c2d45;">consulta saldo</li>
             </ol>
         </nav>
-
-        <?php if (isset($_COOKIE['numero_conta'])) :  ?>
-                    <div class="alert alert-success d-flex align-items-center mb-3 align-right" role="alert">
-                        <?php echo "Bem - vindo, caro cliente! o seu numero da conta é: ".$_COOKIE['numero_conta']; ?>
-                    </div>
-                <?php setcookie("numero_conta", null, -3600, "/");
-            endif; ?>
     
         <?php if (isset($_SESSION['sucess'])) : ?>
             <div class="alert alert-success d-flex align-items-center mb-3" role="alert">
@@ -77,10 +71,6 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
     </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
 </html>

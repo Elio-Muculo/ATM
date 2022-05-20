@@ -20,28 +20,28 @@ include_once str_replace("\\", "/", dirname(__FILE__)). "/includes/header.php";
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Relatório de Recarga </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Relatório de Recarga </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-info">
+                        <p style="color: #000;">Ref: xxx0000</p>
+                        <p style="color: #000;">Operadora: <?= strtoupper($_SESSION['operadora']) ?? '' ?></p>
+                        <p style="color: #000;">valor recarga: <?= $_SESSION['valor'] . " MZN" ?? '' ?></p>
+                        <p style="color: #000;">Código recarga: <?= $_SESSION['recarga'] ?? '' ?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <a href="/templates/recargaPdf.php">
+                            <button type="button" class="btn btn-primary">Imprimir Recibo</button>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body alert alert-info">
-                <p style="color: #000;">Ref: xxx0000</p>
-                <p style="color: #000;">Operadora: <?= strtoupper($_SESSION['operadora']) ?? '' ?></p>
-                <p style="color: #000;">valor recarga: <?= $_SESSION['valor'] . " MZN" ?? '' ?></p>
-                <p style="color: #000;">Código recarga: <?= $_SESSION['recarga'] ?? '' ?></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <a href="/templates/recargaPdf.php">
-                    <button type="button" class="btn btn-primary">Imprimir Recibo</button>
-                </a>
-            </div>
-            </div>
-        </div>
         </div>
 
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
