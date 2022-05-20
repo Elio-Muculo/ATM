@@ -1,10 +1,15 @@
 <?php 
-require_once 'validator.php';
-require_once 'crud.php';
 session_start();
+require_once __DIR__ . '/helper.php';
+require_once __DIR__ . '/validator.php';
+require_once __DIR__ . '/crud.php';
+
 
 $campos = array('int' => $_POST['contador'], 'int' => $_POST['valor']);
 
+/**
+ * validar os campos do input
+ */
 foreach ($campos as $key => $value) {
     if (validarCampos($key, $value)) {
         $valor = $_POST['valor'];
@@ -55,34 +60,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-/**
- * TODO fix this docs
- */
-// verificar se o numero fornecido é valido deve ser 12 digitos.
-function validarNumeroContador($numero) {
-    if (validarCampos('int', $numero)) {
-        if (strlen(strval($numero)) == 12) {
-            return true;
-        }
-    }
-}
-
-
-
-/**
- * TODO fix this docs
- */
-// gerar codigo de 16 numeros de credelec.
-function gerarCodigoCredelec($lenght) {
-    $char = "1234567890";
-    $charLenght = strlen($char);
-    $codigo = '';
-    for ($i = 0; $i < $lenght; $i++) {
-        // dar espaço no numero recarga a cada 4 digitos
-        if (strlen($codigo) == 3 || strlen($codigo) == 8 || strlen($codigo) == 13) {
-            $codigo .= $char[random_int(0, $charLenght - 1)] . "\n";
-        } 
-        $codigo .= $char[random_int(0, $charLenght - 1)];
-    }
-    return $codigo;
-}

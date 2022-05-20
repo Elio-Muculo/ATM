@@ -1,4 +1,7 @@
 <?php 
+require_once __DIR__ . '/db.php';
+
+
 /**
  * 
  * Crud para todos os ficheiros que precisarem executar as operações 
@@ -7,7 +10,6 @@
  * @author Dev.Elliot
  *  
  */
-require_once __DIR__ . '/db.php';
 
 
 
@@ -35,16 +37,16 @@ function readOne($sql, $id = []) {
 
 
 /**
- * Ler os dados de um unico usuario.
+ * Ler todos os dados.
  * 
  * @param string $sql 
  * consulta da busca a ser feita com named parameters
  * 
- * @param array $id  
- * id para filtrar a consulta e named param
+ * @param array $data  
+ * dados a serem executados depois de fazer prepared statements
  * 
  *@return mixed || false $array 
- * retorna os dados de uma linha correspondente ao id falso na falha
+ * retorna os dados ou false no caso de falha.
  */
 function readAll($sql, $data = []) {
     global $conexao;
@@ -58,16 +60,16 @@ function readAll($sql, $data = []) {
 
 
 /**
- * Ler os dados de um unico usuario.
+ * Conta o numero de linhas afectadas por uma consulta
  * 
  * @param string $sql 
  * consulta da busca a ser feita com named parameters
  * 
- * @param array $id  
- * id para filtrar a consulta e named param
+ * @param array $data  
+ * dados a serem executados depois de fazer prepared statements
  * 
- *@return mixed || false $array 
- * retorna os dados de uma linha correspondente ao id falso na falha
+ *@return int
+ * retorna o numero de linhas afectadas
  */
 function countRow($sql, $data = []) {
     global $conexao;
@@ -78,24 +80,21 @@ function countRow($sql, $data = []) {
     return $stmt->rowCount();
 }
 
-function delete($id) {
-
-}
 
 
 /**
- * Ler os dados de um unico usuario.
+ * mudar o estado de uma coluna com base no update
  * 
  * @param string $sql 
  * consulta da busca a ser feita com named parameters
  * 
- * @param array $id  
- * id para filtrar a consulta e named param
+ * @param array $data  
+ * dados a serem executados depois de fazer prepared statements
  * 
- *@return mixed || false $array 
- * retorna os dados de uma linha correspondente ao id falso na falha
+ *@return int
+ * retorna 1 em caso da mudança for bem sucedida.
  */
-function changeUserState($sql, $data) {
+function changeUserState($sql, $data = []) {
     global $conexao;
 
     $stmt = $conexao->prepare($sql);
@@ -107,7 +106,7 @@ function changeUserState($sql, $data) {
 
 
 /**
- * Inserir todoa dados
+ * Inserir todos dados na bd
  * 
  * @param string $sql 
  * query a ser feita executada
@@ -129,6 +128,18 @@ function insertAll($sql, $dados) {
 }
 
 
+/**
+ *  o valor de saldo apos uma operação
+ * 
+ * @param string $sql 
+ * query a ser feita executada
+ * 
+ * @param mixed $dados
+ * dados a serem executados 
+ * 
+ *@return array
+ * retorna 1 no caso de sucesso e 0 caso contrario.
+ */
 function saldo($sql, $dados) {
     global $conexao;
 
@@ -140,6 +151,18 @@ function saldo($sql, $dados) {
 }
 
 
+/**
+ * Atualizar o valor de saldo apos uma operação
+ * 
+ * @param string $sql 
+ * query a ser feita executada
+ * 
+ * @param mixed $dados
+ * dados a serem executados 
+ * 
+ *@return int 
+ * retorna 1 no caso de sucesso e 0 caso contrario.
+ */
 function levantar($sql, $dados) {
     global $conexao;
 

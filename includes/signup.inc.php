@@ -49,8 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
 }
 
-
-// gerar codigo de 16 numeros de credelec.
+/**
+ * * gerar codigo de 16 numeros de credelec.
+ * 
+ * @param int $lenght
+ * tamanho do numero da conta a ser gerado
+ * 
+ * @return int 
+ * retorna o numero da conta aleotorio com tamanho $lenght. 
+ * 
+ */
 function numeroConta($lenght) {
     $char = "1234567890";
     $charLenght = strlen($char);

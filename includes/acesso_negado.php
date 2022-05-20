@@ -1,5 +1,12 @@
 <?php 
+require_once __DIR__ . '/helper.php';
 
+/**
+ * bloqueia uma conta quando o seu estado é 0 por 3 horas
+ * 
+ * @param mixed $dados 
+ * dados do usuario com conta a ser bloqueada.
+ */
 function bloquearConta($dados) {
     if (array_key_exists('estado', $dados)) {
         if ($dados['estado'] == 0) {
@@ -7,7 +14,7 @@ function bloquearConta($dados) {
             // 1 hora = 60 min = 3600s
             // 3 horas = 180 = 10800s
             if (!isset($tempo_bloqueio)) {
-                $tempo_bloqueio = tempoBloqueioConta(20);
+                $tempo_bloqueio = tempoBloqueioConta(10800);
             }
 
             if($tempo_bloqueio < 1) {
@@ -21,23 +28,4 @@ function bloquearConta($dados) {
     }
 }
 
-
-// @tempo - o tempo que a conta estara bloqueada em segundos
-// retorna o tempo em segundos que falta para desbloquear a conta
-function tempoBloqueioConta($tempo) {
-    if(!isset($_SESSION['countdown'])){
-        
-        $_SESSION['countdown'] = $tempo;
-        $_SESSION['time_started'] = time();
-    }
-
-    $now = time();
-
-
-    $timeSince = $now - $_SESSION['time_started'];
-
-    $remainingSeconds = $_SESSION['countdown'] - $timeSince;
-
-    return $remainingSeconds;
-}
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'crud.php';
-require_once 'validator.php';
-require_once 'acesso_negado.php';
+require_once __DIR__ . '/crud.php';
+require_once __DIR__ . '/validator.php';
+require_once __DIR__ . '/acesso_negado.php';
 
 
 

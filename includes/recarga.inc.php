@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-require_once 'validator.php';
-require_once 'crud.php';
+require_once __DIR__ . '/validator.php';
+require_once __DIR__ . '/helper.php';
+require_once __DIR__ . '/crud.php';
 
 $campos = array('string' => $_POST['operadora'], 'int' => $_POST['cel'], 'int' => $_POST['valor']);
 
@@ -58,65 +59,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ../recarga.php');
         exit();
     }  
-}
-
-
- 
-/**
- * gerar codigo de 16 numeros de credelec.
- * TODO documentacao correcta
- */
-function gerarCodigoRecarga($lenght) {
-    $char = "1234567890";
-    $charLenght = strlen($char);
-    $codigo = '';
-    for ($i = 0; $i < $lenght; $i++) {
-        // dar espaço no numero recarga a cada 4 digitos
-        if (strlen($codigo) == 3 || strlen($codigo) == 8 || strlen($codigo) == 13) {
-            $codigo .= $char[random_int(0, $charLenght - 1)] . "\n";
-        } 
-        $codigo .= $char[random_int(0, $charLenght - 1)];
-    }
-    return $codigo;
-}
-
-
-/**
- * gerar codigo de 16 numeros de credelec.
- * TODO documentacao correcta
- */
-function validarNumero($numero, $operadora) {
-    switch ($operadora) {
-        case 'vodacom':
-            if (preg_match('/^\+(258)-(84|85)\d{7}$/', $numero)) {
-                if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-            break;
-        case 'tmcel':
-            if (preg_match('/^\+(258)-(82|83)\d{7}$/', $numero)) {
-                if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-            break;
-        case 'movitel':
-            if (preg_match('/^\+(258)-(86|87)\d{7}$/', $numero)) {
-                if (filter_var($numero, FILTER_SANITIZE_NUMBER_INT)) {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-            break;
-        default:
-            'Operadora inexistente';
-            break;
-    }
 }
 

@@ -2,12 +2,18 @@
 
 /**
  * 
- * TODO fornecer documentacao do metodo
+ * @param string $tipo 
+ * tipo de dado do input 
+ * 
+ * @param mixed $campo 
+ * input do campo a ser validado
+ * 
+ * @return boolean
  **/
- function validarCampos($tipo, $campo) {
+ function validarCampos($tipo = '', $campo) {
     trim($campo); // remover espacos
 	htmlentities($campo); // escapar caracteres especiais
-	stripslashes($campo); // remove \ do input
+	stripslashes($campo); // adiciona \ do input
 
     switch ($tipo) {
         case 'email':
