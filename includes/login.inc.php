@@ -4,6 +4,8 @@ require_once __DIR__ . '/crud.php';
 require_once __DIR__ . '/validator.php';
 require_once __DIR__ . '/acesso_negado.php';
 
+ 
+date_default_timezone_set('Africa/Maputo');
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -47,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     changeUserState("UPDATE usuario SET estado = 0 WHERE numero_conta = :numero", [':numero' => $numero_conta]);
 
                     $error[] = "O numero da conta atingiu o limite de tentativas.";
+                    $error[] = "Proxima tentativa ira bloquear a conta por 3 horas.";
                     $_SESSION['error'] = $error;
                     header('Location: ../index.php');
                     die();
@@ -62,15 +65,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $sql = "SELECT * FROM usuario WHERE numero_conta = :numero AND estado = :estado";
             $dados = readOne($sql, ['numero' => $numero_conta, 'estado' => 0]);
-
-
-            if ($dados['estado'] == 0) {
-                bloquearConta($dados);
-                $error[] = "O usuario está com conta bloqueada por 3 horas.";
-                
-                $_SESSION['error'] = $error;
-                header('Location: ../index.php');
-                die();
+           
+            if (array_key_exists('estado', $dados)) {
+                if ($dados['estado'] == 0) {
+                    bloquearConta($dados);
+                    $error[] = "O usuario está com conta bloqueada por 3 horas.";
+                    $horas = $_SESSION['bloqueio_time'];
+                    $date = new DateTime("@$horas");
+                    $error[] = "A conta desbloqueia daqui à: " . $date->format('H:i:s'); 
+                    
+                    
+                    $_SESSION['error'] = $error;
+                    header('Location: ../index.php');
+                    die();
+                }
             } else {
                 $error[] = "O usuario não está cadastrado no sistema.";
                 

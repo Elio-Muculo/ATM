@@ -40,12 +40,15 @@ $dados = readAll($sql, [':id' => $_SESSION['id_user']]);
         
         <section class="rc-section mt-4">
             <div class="container">
-                <div class="d-grid gap-2 d-md-block">
-                    <input type="text" class="ml-3">
-                    <input type="text" class="ml-3">
-                    <input type="text" class="ml-3">
-                    <button class="btn btn-primary ml-5" type="button">Filtrar</button>
-                </div>
+                <!-- <form action="/includes/movimento.inc.php" method="post">
+                    <div class="d-grid gap-2 d-md-block">
+                        De:
+                        <input type="date" class="ml-3">
+                        &nbsp; Até
+                        <input type="date" class="ml-3">
+                        <input class="btn btn-primary ml-5" type="submit" value="Filtrar">
+                    </div>
+                </form> -->
 
                 <table class="table table-striped mt-5 pt-4">
                     <thead>

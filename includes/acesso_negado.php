@@ -15,6 +15,7 @@ function bloquearConta($dados) {
             // 3 horas = 180 = 10800s
             if (!isset($tempo_bloqueio)) {
                 $tempo_bloqueio = tempoBloqueioConta(10800);
+                $_SESSION['bloqueio_time'] = $tempo_bloqueio;
             }
 
             if($tempo_bloqueio < 1) {
