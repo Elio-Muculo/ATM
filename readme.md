@@ -1,15 +1,9 @@
 
-# Tarefas por fazer 
-- [x] - Factura de recarga <br>
-- [x] - factura de credelec <br>
-- [x] - factura de levantamento <br>
-- [x] - logout no menu <br>
-- [x] - adicionar relatorio ao criar nova conta (signUp)
-- [x] - usar trigger para inserir saldo ao criar nova conta (saldo - usuario)
-- [x] - organizar msg erro e sucesso<br>
-- [x] - classe crud organizar <br>
-- [x] - refactorar codigo e funcoes <br>
-- [ ] - melhorar design <br>
+# ATM SYSTEM
+
+> Read the instructions on file Leia-me 
+<br>
+create a database and import the sql file and enjoy.
 
 `code = with smile `
 <br>
