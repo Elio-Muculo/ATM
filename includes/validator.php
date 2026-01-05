@@ -10,33 +10,21 @@
  * 
  * @return boolean
  **/
- function validarCampos($tipo = '', $campo) {
-    trim($campo); // remover espacos
-	htmlentities($campo); // escapar caracteres especiais
-	stripslashes($campo); // adiciona \ do input
+function validarCampos($tipo = '', $campo) {
+    $campo = trim((string) $campo); // remover espacos
+    $campo = stripslashes($campo); // adiciona \ do input
+    $campo = htmlspecialchars($campo, ENT_QUOTES, 'UTF-8'); // escapar caracteres especiais
 
     switch ($tipo) {
         case 'email':
-            if (!empty($campo) && filter_var($campo, FILTER_VALIDATE_EMAIL)) {
-                return true;
-            } else {
-                return false;
-            }
-            break;
+            return !empty($campo) && filter_var($campo, FILTER_VALIDATE_EMAIL);
         case 'string':
-            $data = isset($data) &&  !empty($data) ? strval($data) : false;
-            break;
+            return $campo !== '';
         case 'int':
-            if (!filter_var($campo, FILTER_VALIDATE_INT) === false) {
-                return true;
-            } else {
-                return false;
-            }
-            break;
+            return filter_var($campo, FILTER_VALIDATE_INT) !== false;
         default:
             "tipo de dados incompativel";
-            break;
+            return false;
     }
 }
-
 

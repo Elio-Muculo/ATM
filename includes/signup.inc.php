@@ -7,43 +7,53 @@ require_once 'validator.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error = [];
 
-    $campos = array('string' => $_POST['user'], 'int' => $_POST['pin'], 'int' => $_POST['cpin']);
+    $campos = [
+        ['string', $_POST['user'] ?? ''],
+        ['int', $_POST['pin'] ?? ''],
+        ['int', $_POST['cpin'] ?? ''],
+    ];
+    $camposValidos = true;
 
     /**
      * validar os campos digitados pelo usuario
      */
     foreach ($campos as $key => $value) {
-        if (validarCampos($key, $value)) {
-            $nome = strval($_POST['user']);
-            $pin = $_POST['pin'];
-            $cpin = $_POST['cpin'];
-            $numero_conta = numeroConta(7);
+        if (!validarCampos($value[0], $value[1])) {
+            $camposValidos = false;
+            break;
         }
     }
 
-    if ($pin !== $cpin) {
-        $error[] = "<p>Os pin não são compatíveis</p>";
-        $_SESSION['error'] = $error;
-        header('Location: ../Registrar.php');
-        die();
-    } else {
-        $pin = password_hash($pin, PASSWORD_DEFAULT);
-        $dados = ['numero' => $numero_conta, 'user' => $nome, 'senha' => $pin, 'estado' => 1, 'datalogin' => date("Y-m-d H:i:s")];
-        $sql = "INSERT INTO usuario (numero_conta, user, senha, estado, data_login) VALUES (:numero, :user, :senha, :estado, :datalogin)";
-        $inserted = insertAll($sql, $dados);
+    if ($camposValidos) {
+        $nome = strval($_POST['user']);
+        $pin = $_POST['pin'];
+        $cpin = $_POST['cpin'];
+        $numero_conta = numeroConta(7);
 
-        if ($inserted == 1) {
-            $id = readOne("SELECT id FROM usuario ORDER BY id DESC LIMIT 1");
-
-            insertAll("INSERT INTO saldo (saldo, id_cliente) VALUES (10000, :id)", [':id' => $id['id']]);
-            $_SESSION['conta'] = $numero_conta;
-            header('Location: ../index.php#signUp');
-            die();
-        } else {
-            $error[] = "<p>Os dados não foram inseridos</p>";
+        if ($pin !== $cpin) {
+            $error[] = "<p>Os pin não são compatíveis</p>";
             $_SESSION['error'] = $error;
             header('Location: ../Registrar.php');
             die();
+        } else {
+            $pin = password_hash($pin, PASSWORD_DEFAULT);
+            $dados = ['numero' => $numero_conta, 'user' => $nome, 'senha' => $pin, 'estado' => 1, 'datalogin' => date("Y-m-d H:i:s")];
+            $sql = "INSERT INTO usuario (numero_conta, user, senha, estado, data_login) VALUES (:numero, :user, :senha, :estado, :datalogin)";
+            $inserted = insertAll($sql, $dados);
+
+            if ($inserted == 1) {
+                $id = readOne("SELECT id FROM usuario ORDER BY id DESC LIMIT 1");
+
+                insertAll("INSERT INTO saldo (saldo, id_cliente) VALUES (10000, :id)", [':id' => $id['id']]);
+                $_SESSION['conta'] = $numero_conta;
+                header('Location: ../index.php#signUp');
+                die();
+            } else {
+                $error[] = "<p>Os dados não foram inseridos</p>";
+                $_SESSION['error'] = $error;
+                header('Location: ../Registrar.php');
+                die();
+            }
         }
     }
     
